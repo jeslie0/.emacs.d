@@ -3,6 +3,109 @@
 #+options: toc:t
 #+attr_html: :width 300px
 [[file:Icons/EmacsLogo.svg]]
+* Contents                                                              :toc:
+- [[#early-initel][early-init.el]]
+- [[#lexical-binding][Lexical-binding]]
+- [[#misc][Misc]]
+- [[#package-managers][Package managers]]
+  - [[#straightel][Straight.el]]
+- [[#cleaning-folders-and-files][Cleaning folders and files]]
+  - [[#folders][Folders]]
+  - [[#files][Files]]
+  - [[#lock-files][Lock files]]
+- [[#garbage-collection][Garbage collection]]
+- [[#keybindings][Keybindings]]
+  - [[#functions][Functions]]
+  - [[#general][General]]
+  - [[#misc-1][Misc]]
+  - [[#hydra][Hydra]]
+  - [[#evil-mode][Evil mode]]
+  - [[#which-key][Which-key]]
+- [[#ui-configuration][UI configuration]]
+  - [[#warnings][Warnings]]
+  - [[#solaire-mode][Solaire mode]]
+  - [[#themes][Themes]]
+  - [[#all-the-icons][All the icons]]
+  - [[#modeline][Modeline]]
+  - [[#emacs-winum][Emacs-winum]]
+  - [[#perspective][Perspective]]
+  - [[#fillings][Fillings]]
+  - [[#recentf][recentf]]
+  - [[#ligatureel][ligature.el]]
+  - [[#rainbow][Rainbow]]
+  - [[#pixel-scroll-mode][pixel scroll mode]]
+- [[#completion-frameworks][Completion frameworks]]
+  - [[#ivy-and-counsel][Ivy and Counsel]]
+  - [[#vertico][Vertico]]
+- [[#project-management][Project Management]]
+  - [[#projectile][Projectile]]
+  - [[#gitvc][Git/VC]]
+  - [[#treemacs][Treemacs]]
+  - [[#helpful][Helpful]]
+  - [[#eldoc][Eldoc]]
+- [[#dashboard][Dashboard]]
+  - [[#functions-1][Functions]]
+  - [[#initialisation][Initialisation]]
+- [[#minor-modes][Minor modes]]
+  - [[#rainbow-delimiters][Rainbow Delimiters]]
+  - [[#outshine][Outshine]]
+  - [[#aggressive-indent][Aggressive indent]]
+  - [[#golden-ratio][Golden Ratio]]
+  - [[#highlight-indent-guides][Highlight-indent-guides]]
+  - [[#page-break-lines][Page break lines]]
+  - [[#smartparens][Smartparens]]
+  - [[#save-place-mode][Save place mode]]
+  - [[#variable-pitch][Variable pitch]]
+  - [[#visual-line-mode][Visual line mode]]
+  - [[#hl-todo][hl-todo]]
+- [[#passwords][Passwords]]
+  - [[#pin-entry-and-gpg-key][Pin entry and GPG key]]
+  - [[#pass][Pass]]
+- [[#languages][Languages]]
+  - [[#tools][Tools]]
+  - [[#proof-assistants][Proof Assistants]]
+  - [[#programming-languages][Programming Languages]]
+  - [[#text][Text]]
+  - [[#other][Other]]
+- [[#readers][Readers]]
+  - [[#elfeed][Elfeed]]
+  - [[#elpher][Elpher]]
+  - [[#erc][erc]]
+  - [[#ementel][ement.el]]
+  - [[#eww][EWW]]
+  - [[#mu4e][Mu4e]]
+  - [[#mpv][mpv]]
+- [[#avy][Avy]]
+- [[#auto-complete-and-spelling][Auto-complete and spelling]]
+  - [[#yasnippet][Yasnippet]]
+  - [[#company-mode][Company mode]]
+  - [[#corfu][Corfu]]
+  - [[#flycheck][Flycheck]]
+  - [[#flyspell][Flyspell]]
+  - [[#flyspell-correct][Flyspell correct]]
+  - [[#spell-fu][Spell-fu]]
+- [[#tools-1][Tools]]
+  - [[#undo-tree][Undo Tree]]
+  - [[#pandoc][Pandoc]]
+  - [[#iedit][Iedit]]
+  - [[#simple-httpd][Simple httpd]]
+  - [[#define-word][Define word]]
+  - [[#pair-programming][Pair Programming]]
+  - [[#edit-server][edit-server]]
+  - [[#esup][esup]]
+  - [[#openwith][openwith]]
+- [[#shells][Shells]]
+  - [[#term][Term]]
+  - [[#vterm][Vterm]]
+  - [[#eshell][Eshell]]
+- [[#fun][Fun]]
+  - [[#snow][Snow]]
+  - [[#fireplace][Fireplace]]
+- [[#direnv][Direnv]]
+  - [[#direnv-1][direnv]]
+  - [[#envrc][envrc]]
+- [[#other-config][Other Config]]
+
 * early-init.el
 #+BEGIN_SRC elisp :tangle ./early-init.el
 ;;; early-init.el -*- lexical-binding: t; -*-
@@ -177,6 +280,11 @@
 (use-package ws-butler
  :defer t
  :hook ((prog-mode text-mode) . ws-butler-mode))
+#+END_SRC
+** Lock files
+Requires emacs version >=28.
+#+BEGIN_SRC elisp
+(setq lock-file-name-transforms `((".*" ,(expand-file-name "tmp/lock-files" user-emacs-directory) t )))
 #+END_SRC
 * Garbage collection
 #+BEGIN_SRC elisp
@@ -736,6 +844,13 @@ If the universal prefix argument is used then kill also the window."
 (use-package rainbow-mode
   :hook ((prog-mode text-mode) . rainbow-mode))
 #+END_SRC
+** pixel scroll mode
+#+BEGIN_SRC elisp
+(use-package pixel-scroll
+  :straight nil
+  :init
+  (pixel-scroll-precision-mode))
+#+END_SRC
 
 * Completion frameworks
 ** Ivy and Counsel
@@ -873,7 +988,7 @@ Allows for partial searching in vertico.
   :defer t
   :after vertico
   :custom
-  (completion-styles '(orderless)))
+  (completion-styles '(orderless basic)))
 #+END_SRC
 *** all-the-icons-completion
 #+BEGIN_SRC elisp
