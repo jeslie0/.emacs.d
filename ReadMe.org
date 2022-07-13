@@ -2352,7 +2352,9 @@ We actually install the language server through Emacs, so we don't need to worry
     :major-modes t
     "j" 'rjsx-jump-tag
     "r" 'rjsx-rename-tag-at-point)
-  :mode ("\\.js\\'" . rjsx-mode))
+  :mode ("\\.js\\'" . rjsx-mode)
+  :config
+  (setq sgml-basic-offset 4))
 #+END_SRC
 **** xref-js2
 #+BEGIN_SRC elisp
