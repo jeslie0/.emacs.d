@@ -1095,6 +1095,11 @@ Allows for partial searching in vertico.
   (evil-define-minor-mode-key 'normal 'git-commit-mode ",," 'with-editor-finish)
   (evil-define-minor-mode-key 'normal 'git-commit-mode ",a" 'with-editor-cancel))
   #+end_src
+*** Magit Forge
+#+BEGIN_SRC elisp :tangle no
+(use-package forge
+  :after magit)
+#+END_SRC
 *** Git Gutter
 #+BEGIN_SRC elisp
 (use-package git-gutter
