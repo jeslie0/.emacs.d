@@ -1797,8 +1797,8 @@ Multiple major modes!
 #+BEGIN_SRC elisp
 (use-package tree-sitter
   :defer t
-  :hook (((haskell-mode) . tree-sitter-mode)
-         ((haskell-mode) . tree-sitter-hl-mode))
+  :hook (((haskell-mode rjsx-mode) . tree-sitter-mode)
+         ((haskell-mode rjsx-mode) . tree-sitter-hl-mode))
   :config
   (add-to-list 'tree-sitter-major-mode-language-alist '(haskell-mode . haskell)))
 #+END_SRC
