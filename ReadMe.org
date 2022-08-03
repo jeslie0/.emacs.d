@@ -992,6 +992,12 @@ Allows for partial searching in vertico.
 #+BEGIN_SRC elisp
 (use-package embark-consult)
 #+END_SRC
+*** consult-tramp
+#+BEGIN_SRC elisp
+(use-package consult-tramp
+  :straight (:host github :repo "Ladicle/consult-tramp")
+  :after consult)
+#+END_SRC
 * Project Management
 ** Projectile
 *** Initialisation
