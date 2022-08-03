@@ -294,48 +294,6 @@ Requires emacs version >=28.
 #+END_SRC
 * Keybindings
 ** Functions
-*** sudo-edit
-Shamelessly stolen from Spacemacs.
-#+begin_src elisp
-(defun sudo-edit (&optional arg)
-  (interactive "P")
-  (use-package tramp
-    :defer t)
-  (let ((fname (if (or arg (not buffer-file-name))
-                   (read-file-name "File: ")
-                 buffer-file-name)))
-    (find-file
-     (if (not (tramp-tramp-file-p fname))
-         (concat "/sudo:root@localhost:" fname)
-       (with-parsed-tramp-file-name fname parsed
-         (when (equal parsed-user "root")
-           (error "Already root!"))
-         (let* ((new-hop (tramp-make-tramp-file-name
-                          ;; Try to retrieve a tramp method suitable for
-                          ;; multi-hopping
-                          (cond ((tramp-get-method-parameter
-                                  parsed 'tramp-login-program))
-                                ((tramp-get-method-parameter
-                                  parsed 'tramp-copy-program))
-                                (t parsed-method))
-                          parsed-user
-                          parsed-domain
-                          parsed-host
-                          parsed-port
-                          nil
-                          parsed-hop))
-                (new-hop (substring new-hop 1 -1))
-                (new-hop (concat new-hop "|"))
-                (new-fname (tramp-make-tramp-file-name
-                            "sudo"
-                            parsed-user
-                            parsed-domain
-                            parsed-host
-                            parsed-port
-                            parsed-localname
-                            new-hop)))
-           new-fname))))))
-#+end_src
 *** dotfiles
 #+begin_src elisp
 (defun find-emacs-dotfile ()
@@ -1491,6 +1449,20 @@ Provides better documentation.
   ;; (add-to-list 'hl-todo-keyword-faces `("DONE" . ,(face-foreground 'org-done)))
   )
 #+END_SRC
+** auto-sudoedit
+Seamless editing of privileged files, by using Tramp.
+#+BEGIN_SRC elisp
+(use-package auto-sudoedit
+  :defer t
+  :hook ((prog-mode text-mode) . auto-sudoedit-mode))
+#+END_SRC
+** polymode
+Multiple major modes!
+#+BEGIN_SRC elisp
+(use-package polymode
+  :defer t)
+#+END_SRC
+
 * Passwords
 ** TODO Pin entry and GPG key
 #+begin_src elisp
