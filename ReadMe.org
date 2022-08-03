@@ -1885,6 +1885,14 @@ Multiple major modes!
     (jl/agda-goal-navigation/body)
     (agda2-previous-goal)))
 #+end_src
+**** org-agda-mode
+#+BEGIN_SRC elisp
+(use-package org-agda-mode
+  :straight (:host github
+		   :repo "alhassy/org-agda-mode"
+		   :branch "master"
+		   :files ("org-agda-mode.el")))
+#+END_SRC
 *** Coq
 #+BEGIN_SRC elisp
 (use-package proof-general
