@@ -58,6 +58,8 @@
   - [[#variable-pitch][Variable pitch]]
   - [[#visual-line-mode][Visual line mode]]
   - [[#hl-todo][hl-todo]]
+  - [[#auto-sudoedit][auto-sudoedit]]
+  - [[#polymode][polymode]]
 - [[#passwords][Passwords]]
   - [[#pin-entry-and-gpg-key][Pin entry and GPG key]]
   - [[#pass][Pass]]
@@ -3292,6 +3294,10 @@ Calling org-babel languages in the following form saves a lot on startup time.
 (use-package orglink
   :init
   (global-orglink-mode))
+#+END_SRC
+**** org-tree-slide-mode
+#+BEGIN_SRC elisp
+(use-package org-tree-slide)
 #+END_SRC
 *** LaTeX
 **** Keybindings
