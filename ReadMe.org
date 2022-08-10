@@ -85,6 +85,7 @@
   - [[#flycheck][Flycheck]]
   - [[#flyspell][Flyspell]]
   - [[#flyspell-correct][Flyspell correct]]
+  - [[#flymake-collection][Flymake collection]]
   - [[#spell-fu][Spell-fu]]
 - [[#tools-1][Tools]]
   - [[#undo-tree][Undo Tree]]
@@ -1067,7 +1068,7 @@ Allows for partial searching in vertico.
   :after magit)
 #+END_SRC
 *** Git Gutter
-#+BEGIN_SRC elisp
+#+BEGIN_SRC elisp :tangle no
 (use-package git-gutter
   :general
   (jl/SPC-keys
@@ -1096,6 +1097,60 @@ Allows for partial searching in vertico.
   (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
+#+END_SRC
+*** Diff Hl
+#+BEGIN_SRC elisp
+(use-package diff-hl
+  :general
+  (jl/SPC-keys
+    "gg"  '(:ignore t :which-key "gutter")
+    "ggn" 'diff-hl-next-hunk
+    ;; "gge" 'git-gutter:end-of-hunk
+    "ggm" 'diff-hl-mark-hunk
+    "ggP" 'diff-hl-show-hunk
+    "ggp" 'diff-hl-previous-hunk
+    "ggr" 'diff-hl-revert-hunk
+    ;; "ggR" 'git-gutter:set-start-revision
+    "ggs" 'diff-hl-stage-current-hunk
+    ;; "ggts" 'git-gutter:start-update-timer
+    ;; "ggtc" 'git-gutter:cancel-update-timer
+    ;; "ggS" 'git-gutter:statistic
+    ;; "ggu" 'git-gutter:update-all-windows
+    )
+  :hook
+  ((prog-mode text-mode) . diff-hl-mode)
+  ((prog-mode text-mode) . diff-hl-flydiff-mode)
+  ((prog-mode text-mode) . diff-hl-show-hunk-mouse-mode)
+  (dired-mode . diff-hl-dired-mode)
+  (magit-pre-refresh . diff-hl-magit-pre-refresh)
+  (magit-post-refresh . diff-hl-magit-post-refresh)
+
+  :custom
+  (diff-hl-fringe-face-function '(lambda (type _pos)
+                                   (intern (format "diff-hl-%s" type))))
+  (diff-hl-fringe-bmp-function '(lambda (type _pos)
+                                  (intern (format "diff-hl-%s" type))))
+  (diff-hl-margin-symbols-alist
+   '((insert . "┃")
+     (delete . "┃")
+     (change . "┃")
+     (unknown . "?")
+     (ignored . "i")))
+  :config
+  (define-fringe-bitmap 'diff-hl-insert
+    [#b00000011] nil nil '(center repeated))
+  (define-fringe-bitmap 'diff-hl-change
+    [#b00000011] nil nil '(center repeated))
+  (define-fringe-bitmap 'diff-hl-delete
+    [#b00000011] nil nil '(center repeated))
+
+  (doom-themes-set-faces nil
+    '(diff-hl-insert :foreground vc-added :background bg)
+    '(diff-hl-delete :foreground vc-deleted :background bg)
+    '(diff-hl-change :foreground vc-modified :background bg)
+    '(diff-hl-margin-insert :foreground vc-added :background bg)
+    '(diff-hl-margin-delete :foreground vc-deleted :background bg)
+    '(diff-hl-margin-change :foreground vc-modified :background bg)))
 #+END_SRC
 *** VC
 #+BEGIN_SRC elisp
@@ -1779,6 +1834,7 @@ Multiple major modes!
     "=D"  'eldoc
     "=g"  'xref-find-definitions
 
+
     "=Be" 'eglot-events-buffer
     "=Bs" 'eglot-stderr-buffer)
   :custom
@@ -1797,8 +1853,8 @@ Multiple major modes!
 #+BEGIN_SRC elisp
 (use-package tree-sitter
   :defer t
-  :hook (((haskell-mode rjsx-mode) . tree-sitter-mode)
-         ((haskell-mode rjsx-mode) . tree-sitter-hl-mode))
+  ;; :hook ((() . tree-sitter-mode)
+  ;;        (() . tree-sitter-hl-mode))
   :config
   (add-to-list 'tree-sitter-major-mode-language-alist '(haskell-mode . haskell)))
 #+END_SRC
@@ -3299,6 +3355,19 @@ Calling org-babel languages in the following form saves a lot on startup time.
 #+BEGIN_SRC elisp
 (use-package org-tree-slide)
 #+END_SRC
+**** TODO Org-projectile
+#+BEGIN_SRC elisp :tangle no
+(use-package org-projectile
+  :bind (("C-c n p" . org-projectile-project-todo-completing-read)
+         ("C-c c" . org-capture))
+  :config
+  (progn
+    (setq org-projectile-projects-file
+          "/your/path/to/an/org/file/for/storing/projects.org")
+    (setq org-agenda-files (append org-agenda-files (org-projectile-todo-files)))
+    (push (org-projectile-project-todo-entry) org-capture-templates))
+  :ensure t)
+#+END_SRC
 *** LaTeX
 **** Keybindings
 #+begin_src elisp
@@ -4657,6 +4726,10 @@ SCOPE can be:
   :config
   (ispell-set-spellchecker-params))
 #+end_src
+** Flymake collection
+#+BEGIN_SRC elisp
+(use-package flymake-collection)
+#+END_SRC
 ** Spell-fu
 #+BEGIN_SRC elisp
 (use-package spell-fu
