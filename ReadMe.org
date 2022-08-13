@@ -58,7 +58,6 @@
   - [[#variable-pitch][Variable pitch]]
   - [[#visual-line-mode][Visual line mode]]
   - [[#hl-todo][hl-todo]]
-  - [[#auto-sudoedit][auto-sudoedit]]
   - [[#polymode][polymode]]
 - [[#passwords][Passwords]]
   - [[#pin-entry-and-gpg-key][Pin entry and GPG key]]
@@ -97,6 +96,8 @@
   - [[#edit-server][edit-server]]
   - [[#esup][esup]]
   - [[#openwith][openwith]]
+  - [[#auto-sudoedit][auto-sudoedit]]
+  - [[#sudo-edit][sudo-edit]]
 - [[#shells][Shells]]
   - [[#term][Term]]
   - [[#vterm][Vterm]]
@@ -386,7 +387,6 @@ Taken from [[https://emacsredux.com/blog/2013/05/04/rename-file-and-buffer/][ema
     "fd" 'delete-file-and-buffer
     "fed" '(find-emacs-dotfile :which-key "Open init file")
     "fnd" '(find-system-dotfile :which-key "Open dotfiles")
-    "fE" '(sudo-edit :which-key "Edit with sudo...")
     "fR" 'rename-file-and-buffer
     "fs" '(save-buffer :which-key "save")
     "qq" 'kill-emacs
@@ -1507,13 +1507,6 @@ Provides better documentation.
   (add-to-list 'hl-todo-keyword-faces `("TODO" . ,(face-foreground 'org-todo)))
   ;; (add-to-list 'hl-todo-keyword-faces `("DONE" . ,(face-foreground 'org-done)))
   )
-#+end_src
-** auto-sudoedit
-Seamless editing of privileged files, by using Tramp.
-#+begin_src elisp
-(use-package auto-sudoedit
-  :defer t
-  :hook ((prog-mode text-mode) . auto-sudoedit-mode))
 #+end_src
 ** polymode
 Multiple major modes!
@@ -4922,6 +4915,20 @@ SCOPE can be:
   :straight gnus
   :config
   (add-to-list 'mm-inhibit-file-name-handlers 'openwith-file-handler))
+#+end_src
+** auto-sudoedit
+Seamless editing of privileged files, by using Tramp. I prefer to choose to reopen a file with sudo privileges, so I don't use this.
+#+begin_src elisp :tangle no
+(use-package auto-sudoedit
+  :defer t
+  :hook ((prog-mode text-mode) . auto-sudoedit-mode))
+#+end_src
+** sudo-edit
+#+begin_src elisp
+(use-package sudo-edit
+  :general
+  (jl/SPC-keys
+    "fE" 'sudo-edit))
 #+end_src
 * Shells
 ** Term
