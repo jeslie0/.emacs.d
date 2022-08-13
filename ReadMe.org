@@ -110,7 +110,7 @@
 - [[#other-config][Other Config]]
 
 * early-init.el
-#+BEGIN_SRC elisp :tangle ./early-init.el
+#+begin_src elisp :tangle ./early-init.el
 ;;; early-init.el -*- lexical-binding: t; -*-
 
 ;; We use straight.el for packages, hence we don't want to initialise
@@ -224,7 +224,7 @@
 (set-language-environment "UTF-8")
 ;; set-language-enviornment sets default-input-method, which is unwanted
 (setq default-input-method nil)
-#+END_SRC
+#+end_src
 * Lexical-binding
 #+begin_src elisp
 ;;; init.el -*- lexical-binding: t; -*-
@@ -279,22 +279,22 @@
 #+end_src
 ** Files
 *** Whitespace (ws-butler)
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package ws-butler
  :defer t
  :hook ((prog-mode text-mode) . ws-butler-mode))
-#+END_SRC
+#+end_src
 ** Lock files
 Requires emacs version >=28.
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (setq lock-file-name-transforms `((".*" ,(expand-file-name "tmp/lock-files" user-emacs-directory) t )))
-#+END_SRC
+#+end_src
 * Garbage collection
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package gcmh
   :init
   (gcmh-mode 1))
-#+END_SRC
+#+end_src
 * Keybindings
 ** Functions
 *** dotfiles
@@ -310,7 +310,7 @@ Requires emacs version >=28.
   (find-file-existing "~/.dotfiles/ReadMe.org"))
 #+end_src
 *** delete-this-file
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (defun delete-file-and-buffer ()
   "Removes file connected to current buffer and kills buffer."
   (interactive)
@@ -328,10 +328,10 @@ Requires emacs version >=28.
               (call-interactively #'projectile-invalidate-cache))
             (message "File deleted: '%s'" filename))
         (message "Canceled: File deletion"))))
-#+END_SRC
+#+end_src
 *** renaming
 Taken from [[https://emacsredux.com/blog/2013/05/04/rename-file-and-buffer/][emacsredux]].
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (defun rename-file-and-buffer ()
   "Rename the current buffer and file it is visiting."
   (interactive)
@@ -345,7 +345,7 @@ Taken from [[https://emacsredux.com/blog/2013/05/04/rename-file-and-buffer/][ema
           (rename-file filename new-name t)
           (set-visited-file-name new-name t t)))))))
 
-#+END_SRC
+#+end_src
 ** General
 #+begin_src elisp
 (use-package general
@@ -474,14 +474,14 @@ We use the [[https://github.com/abo-abo/hydra][Hydra]] package for transient buf
   (evil-commentary-mode 1))
 #+end_src
 *** evil-surround
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package evil-surround
   :after (evil)
   :config
   (global-evil-surround-mode 1))
-#+END_SRC
+#+end_src
 *** evil-escape
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package evil-escape
   :diminish t
   :after (evil)
@@ -489,20 +489,20 @@ We use the [[https://github.com/abo-abo/hydra][Hydra]] package for transient buf
   (evil-escape-mode)
   (setq-default evil-escape-key-sequence "jk")
   (setq-default evil-escape-delay 0.2))
-#+END_SRC
+#+end_src
 *** evil-tex
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package evil-tex
   :hook (LaTeX-mode . evil-tex-mode)
   :after (evil))
-#+END_SRC
+#+end_src
 *** evil-tutor
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package evil-tutor
   :general
   (jl/SPC-keys
     "hv" 'evil-tutor-start))
-#+END_SRC
+#+end_src
 ** Which-key
 Adds the popup for key commands with mulitple key presses.
 #+begin_src elisp
@@ -527,11 +527,11 @@ Adds the popup for key commands with mulitple key presses.
 (setq warning-suppress-types '((comp) (org-roam) (org-element-cache) ()(:warning)))
 #+end_src
 ** Solaire mode
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package solaire-mode
   :custom
   (solaire-global-mode +1))
-#+END_SRC
+#+end_src
 ** Themes
 *** Doom themes
 #+begin_src elisp
@@ -553,7 +553,7 @@ Adds the popup for key commands with mulitple key presses.
   :defer t)
 #+end_src
 ** All the icons
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package all-the-icons
   :straight (all-the-icons :type git :host github :repo "domtronn/all-the-icons.el"
 			   :fork (:host github
@@ -565,15 +565,15 @@ Adds the popup for key commands with mulitple key presses.
     (add-to-list 'all-the-icons-data/file-icon-alist '("agda" . "\x1315a"))
     (add-to-list 'all-the-icons-extension-icon-alist '("agda" all-the-icons-fileicon "agda" :height 1.0 :v-adjust -0.2 :face all-the-icons-lblue))
     (add-to-list 'all-the-icons-extension-icon-alist '("lagda" all-the-icons-fileicon "agda" :height 1.0 :v-adjust -0.2 :face all-the-icons-lblue))))
-#+END_SRC
+#+end_src
 *** All the icons dired
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package all-the-icons-dired
   :commands (dired)
   :hook (dired-mode . all-the-icons-dired-mode)
   :custom
   (all-the-icons-dired-monochrome nil))
-#+END_SRC
+#+end_src
 ** Modeline
 We use doom modeline.
 #+begin_src elisp
@@ -767,22 +767,22 @@ If the universal prefix argument is used then kill also the window."
   (persp-mode))
 #+end_src
 ** TODO Fillings
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (add-hook 'prog-mode-hook 'auto-fill-mode)
 (setq comment-auto-fill-only-comments t)
 (add-hook 'text-mode-hook 'visual-line-mode)
-#+END_SRC
+#+end_src
 ** recentf
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package recentf
   :config
   (add-to-list 'recentf-exclude (expand-file-name "~/.elfeed/index"))
   (add-to-list 'recentf-exclude (expand-file-name "~/.dotfiles/.emacs.d/bookmarks"))
   (add-to-list 'recentf-exclude (expand-file-name (concat user-emacs-directory "bookmarks")))
   (add-to-list 'recentf-exclude (expand-file-name "~/.dotfiles/.emacs.d/ReadMe.org")))
-#+END_SRC
+#+end_src
 ** ligature.el
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package ligature
   :after prog-mode
   :straight (:host github :repo "mickeynp/ligature.el" :branch "master" :files ("ligature.el"))
@@ -799,19 +799,19 @@ If the universal prefix argument is used then kill also the window."
                                        "<~" "<~~" "</" "</>" "~@" "~-" "~>" "~~" "~~>" "%%"))
 
   (global-ligature-mode 't))
-#+END_SRC
+#+end_src
 ** Rainbow
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package rainbow-mode
   :hook ((prog-mode text-mode) . rainbow-mode))
-#+END_SRC
+#+end_src
 ** pixel scroll mode
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package pixel-scroll
   :straight nil
   :init
   (pixel-scroll-precision-mode))
-#+END_SRC
+#+end_src
 
 * Completion frameworks
 ** Ivy and Counsel
@@ -875,7 +875,7 @@ If the universal prefix argument is used then kill also the window."
   #+end_src
 ** Vertico
 *** Functions
-#+BEGIN_SRC elisp :tangle no
+#+begin_src elisp :tangle no
 (defun minibuffer-backward-kill (arg)
   "When minibuffer is completing a file name delete up to parent
 folder, otherwise delete a character backward"
@@ -886,9 +886,9 @@ folder, otherwise delete a character backward"
           (zap-up-to-char (- arg) ?/)
         (delete-minibuffer-contents))
       (delete-backward-char arg)))
-#+END_SRC
+#+end_src
 *** Initialisation
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package vertico
   :straight (vertico :includes vertico-directory
                      :files (:defaults "extensions/vertico-directory.el"))
@@ -912,18 +912,18 @@ folder, otherwise delete a character backward"
                      #'consult-completion-in-region
                    #'completion--in-region)
                  args))))
-#+END_SRC
+#+end_src
 *** Marginalia
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package marginalia
   :after vertico
   :custom
   (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
   :init
   (marginalia-mode))
-#+END_SRC
+#+end_src
 *** Consult
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package consult
   :general
   ("C-s" 'consult-line)
@@ -941,33 +941,33 @@ folder, otherwise delete a character backward"
     :states '(normal visual operator)
     :major-modes t
     "C-s" 'consult-org-heading))
-#+END_SRC
+#+end_src
 *** Orderless
 Allows for partial searching in vertico.
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package orderless
   :defer t
   :after vertico
   :custom
   (completion-styles '(orderless basic)))
-#+END_SRC
+#+end_src
 *** all-the-icons-completion
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package all-the-icons-completion
   :after marginalia
   :hook (marginalia-mode . all-the-icons-completion-marginalia-setup)
   :init
   (all-the-icons-completion-mode))
-#+END_SRC
+#+end_src
 *** savehist
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package savehist
   :after vertico
   :init
   (savehist-mode))
-#+END_SRC
+#+end_src
 *** App launcher
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package app-launcher
   :defer t
   :straight '(app-launcher :host github :repo "SebastienWae/app-launcher")
@@ -975,10 +975,10 @@ Allows for partial searching in vertico.
   :general
   (jl/SPC-keys
     "RET" 'app-launcher-run-app))
-#+END_SRC
+#+end_src
 *** Embark
 **** Initialisation
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package embark
   :commands
   (embark-act
@@ -990,17 +990,17 @@ Allows for partial searching in vertico.
    "C-h B" 'embark-bindings)
   :custom
   (prefix-help-command #'embark-prefix-help-command))
-#+END_SRC
+#+end_src
 **** embark-consult
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package embark-consult)
-#+END_SRC
+#+end_src
 *** consult-tramp
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package consult-tramp
   :straight (:host github :repo "Ladicle/consult-tramp")
   :after consult)
-#+END_SRC
+#+end_src
 * Project Management
 ** Projectile
 *** Initialisation
@@ -1035,7 +1035,7 @@ Allows for partial searching in vertico.
   (projectile-mode))
 #+end_src
 *** consult-projectile
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package consult-projectile
   ;; :after (consult projectile)
   :straight (consult-projectile :type git :host gitlab :repo "OlMon/consult-projectile" :branch "master")
@@ -1047,7 +1047,7 @@ Allows for partial searching in vertico.
     "pp" 'consult-projectile-switch-project
     "pb" 'consult-projectile-switch-to-buffer
     "pP" 'consult-projectile))
-#+END_SRC
+#+end_src
 ** Git/VC
 *** Magit
 #+begin_src elisp
@@ -1063,12 +1063,12 @@ Allows for partial searching in vertico.
   (evil-define-minor-mode-key 'normal 'git-commit-mode ",a" 'with-editor-cancel))
   #+end_src
 *** Magit Forge
-#+BEGIN_SRC elisp :tangle no
+#+begin_src elisp :tangle no
 (use-package forge
   :after magit)
-#+END_SRC
+#+end_src
 *** Git Gutter
-#+BEGIN_SRC elisp :tangle no
+#+begin_src elisp :tangle no
 (use-package git-gutter
   :general
   (jl/SPC-keys
@@ -1097,9 +1097,9 @@ Allows for partial searching in vertico.
   (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
-#+END_SRC
+#+end_src
 *** Diff Hl
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package diff-hl
   :general
   (jl/SPC-keys
@@ -1151,9 +1151,9 @@ Allows for partial searching in vertico.
     '(diff-hl-margin-insert :foreground vc-added :background bg)
     '(diff-hl-margin-delete :foreground vc-deleted :background bg)
     '(diff-hl-margin-change :foreground vc-modified :background bg)))
-#+END_SRC
+#+end_src
 *** VC
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (jl/SPC-keys
   "gv" '(:ignore t :which-key "VC")
   "gvM" '(:ignore t :which-key "Mergebase")
@@ -1181,7 +1181,7 @@ Allows for partial searching in vertico.
   "gvP" 'vc-push
   "gvM" 'vc-diff-mergebase
   "gvM" 'vc-log-mergebase)
-#+END_SRC
+#+end_src
 ** Treemacs
 *** Initialisation
 #+begin_src elisp
@@ -1300,34 +1300,34 @@ Allows for partial searching in vertico.
             (treemacs-git-mode 'simple)))
 
          (treemacs-hide-gitignored-files-mode nil)))
-        #+END_SRC
+        #+end_src
 *** Treemacs evil
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package treemacs-evil
   :defer t
   :after (treemacs evil))
-#+END_SRC
+#+end_src
 *** Treemacs projectile
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package treemacs-projectile
   :defer t
   :after (treemacs projectile))
-#+END_SRC
+#+end_src
 *** Treemacs icons dired
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package treemacs-icons-dired
   :defer t
   :after (treemacs dired)
   :config (treemacs-icons-dired-mode))
-#+END_SRC
+#+end_src
 *** Treemacs magit
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package treemacs-magit
   :defer t
   :after (treemacs magit))
-#+END_SRC
+#+end_src
 *** Treemacs persp
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package treemacs-perspective ;;treemacs-perspective if you use perspective.el vs. persp-mode
   :defer t
   :after (treemacs perspective) ;;or perspective vs. persp-mode
@@ -1374,7 +1374,7 @@ Provides better documentation.
 #+end_src
 ** Eldoc
 *** Initialisation
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package eldoc
   :defer t
   :commands (eldoc)
@@ -1382,14 +1382,14 @@ Provides better documentation.
   (eldoc-echo-area-prefer-doc-buffer t)
   (eldoc-idle-delay 0.5)
   (eldoc-echo-area-use-multiline-p nil))
-#+END_SRC
+#+end_src
 *** eldoc-box
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package eldoc-box
   :commands eldoc-box-eglot-help-at-point
   :config
   (set-face-attribute 'eldoc-box-body nil :background (face-background 'solaire-default-face)))
-#+END_SRC
+#+end_src
 * Dashboard
 ** Functions
 #+begin_src elisp
@@ -1450,7 +1450,7 @@ Provides better documentation.
   :hook ((prog-mode LaTeX-mode) . outshine-mode))
 #+end_src
 ** Aggressive indent
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package aggressive-indent
   :defer t
   ;; :init
@@ -1460,31 +1460,31 @@ Provides better documentation.
   (add-to-list 'aggressive-indent-excluded-modes 'c-mode)
   (add-to-list 'aggressive-indent-excluded-modes 'haskell-cabal-mode)
   (add-to-list 'aggressive-indent-excluded-modes 'haskell-mode))
-#+END_SRC
+#+end_src
 ** Golden Ratio
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package golden-ratio
   :defer t)
-#+END_SRC
+#+end_src
 ** Highlight-indent-guides
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package highlight-indent-guides
   :defer t
   :hook ((prog-mode LaTeX-mode). highlight-indent-guides-mode)
   :custom
   (highlight-indent-guides-method 'character))
-#+END_SRC
+#+end_src
 ** Page break lines
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package page-break-lines
   :defer t
   :after dashboard)
-#+END_SRC
+#+end_src
 ** Smartparens
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package smartparens
   :defer t)
-#+END_SRC
+#+end_src
 ** Save place mode
 #+begin_src elisp
 (use-package saveplace
@@ -1492,17 +1492,17 @@ Provides better documentation.
   :hook ((prog-mode text-mode) . save-place-mode))
 #+end_src
 ** Variable pitch
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package variable-pitch
   :defer t
   :straight face-remap)
-#+END_SRC
+#+end_src
 ** TODO Visual line mode
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (add-hook 'text-mode-hook 'visual-line-mode)
-#+END_SRC
+#+end_src
 ** hl-todo
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package hl-todo
   :defer t
   :hook ((prog-mode text-mode) . hl-todo-mode)
@@ -1511,20 +1511,20 @@ Provides better documentation.
   (add-to-list 'hl-todo-keyword-faces `("TODO" . ,(face-foreground 'org-todo)))
   ;; (add-to-list 'hl-todo-keyword-faces `("DONE" . ,(face-foreground 'org-done)))
   )
-#+END_SRC
+#+end_src
 ** auto-sudoedit
 Seamless editing of privileged files, by using Tramp.
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package auto-sudoedit
   :defer t
   :hook ((prog-mode text-mode) . auto-sudoedit-mode))
-#+END_SRC
+#+end_src
 ** polymode
 Multiple major modes!
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package polymode
   :defer t)
-#+END_SRC
+#+end_src
 
 * Passwords
 ** TODO Pin entry and GPG key
@@ -1811,7 +1811,7 @@ Multiple major modes!
     "iS" 'lsp-ivy-global-workspace-symbol))
 #+end_src
 *** Eglot
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package eglot
   :commands (eglot)
   :general
@@ -1847,29 +1847,29 @@ Multiple major modes!
    "K" 'eldoc-box-eglot-help-at-point)
   (add-to-list 'eglot-server-programs '((tex-mode context-mode texinfo-mode bibtex-mode) "texlab"))
   (add-to-list 'eglot-server-programs '(python-mode . ("python-language-server" ""))))
-#+END_SRC
+#+end_src
 *** Tree sitter
 **** Initialisation
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package tree-sitter
   :defer t
   ;; :hook ((() . tree-sitter-mode)
   ;;        (() . tree-sitter-hl-mode))
   :config
   (add-to-list 'tree-sitter-major-mode-language-alist '(haskell-mode . haskell)))
-#+END_SRC
+#+end_src
 **** Tree sitter langs
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package tree-sitter-langs
   :defer t
   :after tree-sitter)
-#+END_SRC
+#+end_src
 **** Tree edit
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package evil-tree-edit
   :defer t
   :after tree-sitter)
-#+END_SRC
+#+end_src
 ** Proof Assistants
 *** Agda
 **** Initialisation
@@ -1944,15 +1944,15 @@ Multiple major modes!
     (agda2-previous-goal)))
 #+end_src
 **** org-agda-mode
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package org-agda-mode
   :straight (:host github
 		   :repo "alhassy/org-agda-mode"
 		   :branch "master"
 		   :files ("org-agda-mode.el")))
-#+END_SRC
+#+end_src
 *** Coq
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package proof-general
   :general
   (jl/major-modes
@@ -2014,25 +2014,25 @@ Multiple major modes!
   :custom
   (proof-splash-enable nil)
   (proof-three-window-mode-policy 'hybrid))
-#+END_SRC
+#+end_src
 ** Programming Languages
 For most programming languages, the development tools will be installed through a nix flake.
 *** TODO C/C++
 **** Initialisation
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package cc-mode
   :hook ((c-mode-common . electric-pair-local-mode)
          (c-mode-common . electric-indent-mode)))
-#+END_SRC
+#+end_src
 **** TODO clang-format
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package clang-format
   :defer t
   :config
   (setq clang-format-style-option "llvm"))
-#+END_SRC
+#+end_src
 **** TODO gendoxy
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package gendoxy
   :straight (:host github :repo "mp81ss/gendoxy" :branch "master" :files ("*.el"))
   :general
@@ -2049,14 +2049,14 @@ For most programming languages, the development tools will be installed through 
    "ds" 'gendoxy-group-start
    "de" 'gendoxy-group-end)
   :defer t)
-#+END_SRC
+#+end_src
 **** CANCELLED r-tags
-#+BEGIN_SRC elisp :tangle no
+#+begin_src elisp :tangle no
 (use-package rtags
     :defer t)
-#+END_SRC
+#+end_src
 *** TODO C#
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package csharp-mode
   :defer t
   :config
@@ -2065,9 +2065,9 @@ For most programming languages, the development tools will be installed through 
 
 (use-package omnisharp
   :defer t)
-#+END_SRC
+#+end_src
 *** Elm
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package elm-mode
   :general
   (jl/major-modes
@@ -2109,7 +2109,7 @@ For most programming languages, the development tools will be installed through 
       :states '(normal visual operator)
       :major-modes t
       "v" 'elm-test-project)))
-#+END_SRC
+#+end_src
 *** Haskell
 **** lsp-haskell
 #+begin_src elisp
@@ -2270,7 +2270,7 @@ For most programming languages, the development tools will be installed through 
 *** Lisps
 **** TODO Common Lisp
 ***** Slime
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package slime
   :defer t
   :init
@@ -2331,32 +2331,32 @@ For most programming languages, the development tools will be installed through 
     "sq" 'slime-quit-lisp
 
     "tf" 'slime-toggle-fancy-trace))
-#+END_SRC
+#+end_src
 ***** TODO evil-lisp-state
-#+BEGIN_SRC elisp :tangle no
+#+begin_src elisp :tangle no
 (use-package evil-lisp-state
   :defer t
   :config
   (evil-lisp-state-leader ",,"))
-#+END_SRC
+#+end_src
 ***** evil-cleverparens
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package evil-cleverparens
   :hook ((common-lisp-mode emacs-lisp-mode) . evil-cleverparens-mode)
   :defer t)
-#+END_SRC
+#+end_src
 **** TODO Emacs Lisp
 ***** Global bindings
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (jl/SPC-keys
   "e"  '(:ignore t :which-key "elisp")
   "er" 'eval-region
   "eb" 'eval-buffer)
 
 (add-hook 'emacs-lisp-mode-hook 'electric-pair-local-mode)
-#+END_SRC
+#+end_src
 ***** Ielm
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package ielm
   :general
   (jl/major-modes
@@ -2370,9 +2370,9 @@ For most programming languages, the development tools will be installed through 
     :keymaps 'emacs-lisp-mode-map
     :major-modes t
     "'" 'ielm))
-#+END_SRC
+#+end_src
 ***** Debug
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package debug
   :defer t)
 
@@ -2391,10 +2391,10 @@ For most programming languages, the development tools will be installed through 
     "c" 'edebug-update-eval-list
     "ee" 'edebug-eval-last-sexp
     "eE" 'edebug-eval-print-last-sexp))
-#+END_SRC
+#+end_src
 *** Shell
 **** Initialisation
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package sh-script
   ;; :mode ("\\.sh\\'"
   ;;        "\\.zsh\\'"
@@ -2424,10 +2424,10 @@ For most programming languages, the development tools will be installed through 
     "iu" 'sh-until
     "ig" 'sh-while-getopts)
   )
-  #+END_SRC
+  #+end_src
 **** Shfmt
 Requires shfmt installed on system.
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package shfmt
   :hook (sh-mode . shfmt-on-save-mode)
   :general
@@ -2436,10 +2436,10 @@ Requires shfmt installed on system.
     :states '(normal visual operator)
     :major-modes t
     "=" 'shfmt-buffer))
-#+END_SRC
+#+end_src
 **** Insert Shebang
 Works, but is really annoying.
-#+BEGIN_SRC elisp :tangle no
+#+begin_src elisp :tangle no
 (use-package insert-shebang
   :general
   (jl/major-modes
@@ -2447,10 +2447,10 @@ Works, but is really annoying.
     :states '(normal visual operator)
     :major-modes t
     "i!" 'insert-shebang))
-#+END_SRC
+#+end_src
 *** Nix
 **** Functions
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (defun find-nixos-configuration ()
   "Edit the `dotfile', in the current window."
   (interactive)
@@ -2583,9 +2583,9 @@ We actually install the language server through Emacs, so we don't need to worry
   :mode ("\\.js\\'" . rjsx-mode)
   :config
   (setq sgml-basic-offset 4))
-#+END_SRC
+#+end_src
 **** xref-js2
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package xref-js2
   :general
   (jl/major-modes
@@ -2597,19 +2597,19 @@ We actually install the language server through Emacs, so we don't need to worry
   (setq xref-js2-search-program 'rg))
 (add-hook 'js2-mode-hook (lambda ()
                            (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))
-#+END_SRC
+#+end_src
 
 *** Python
 **** Python LSP
 We need a function to find the lsp server when it's installed through a nix shell.
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package lsp-python-ms
   :defer t
   :hook (python-mode . (lambda ()
                          (require 'lsp-python-ms))))
-#+END_SRC
+#+end_src
 **** python-mode
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package python-mode
   :defer t
   :custom
@@ -2621,9 +2621,9 @@ We need a function to find the lsp server when it's installed through a nix shel
     (interactive)
     (setq lsp-python-ms-executable (executable-find "python-language-server"))
     (lsp-deferred)))
-#+END_SRC
+#+end_src
 **** ipython-shell-send
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package ipython-shell-send
   :general
   (jl/major-modes
@@ -2634,13 +2634,13 @@ We need a function to find the lsp server when it's installed through a nix shel
     "sb" 'ipython-shell-send-buffer
     "sr" 'ipython-shell-send-region
     "sd" 'ipython-shell-send-defun))
-#+END_SRC
+#+end_src
 **** Blacken
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package blacken
   :defer t
   :hook (python-mode . blacken-mode))
-#+END_SRC
+#+end_src
 ** Text
 *** Org mode
 **** Functions
@@ -2951,7 +2951,7 @@ We need a function to find the lsp server when it's installed through a nix shel
   )
   #+end_src
 **** Latex previews
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (defun jl/org-luasvg ()
   "Sets up luasvg as a way to render latex fragments"
   (setq luasvg '(luasvg :programs ("lualatex" "dvisvgm")
@@ -2964,7 +2964,7 @@ We need a function to find the lsp server when it's installed through a nix shel
                         :image-converter ("dvisvgm %f -n -b min -c %S -o %O")))
 
   (add-to-list 'org-preview-latex-process-alist luasvg))
-#+END_SRC
+#+end_src
 **** Initialisation
 #+begin_src elisp
 (use-package org
@@ -3029,7 +3029,7 @@ We need a function to find the lsp server when it's installed through a nix shel
 #+end_src
 **** Org Roam
 ***** Functions
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (defun org-roam-force-rebuild-cache ()
   "Rebuild the `org-mode' and `org-roam' cache."
   (interactive)
@@ -3038,7 +3038,7 @@ We need a function to find the lsp server when it's installed through a nix shel
   ;; followed by `org-roam-db-sync'
   (org-roam-db-sync)
   (org-roam-update-org-id-locations))
-#+END_SRC
+#+end_src
 ***** Keybindings
 #+begin_src elisp
 (defun jl/org-roam-global-keys ()
@@ -3092,7 +3092,7 @@ We need a function to find the lsp server when it's installed through a nix shel
 
 #+end_src
 ***** Templates
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (defun jl/org-roam-templates ()
   (setq org-roam-capture-templates
 	'(("q" "quick note" plain
@@ -3122,7 +3122,7 @@ We need a function to find the lsp server when it's installed through a nix shel
 	   "* %?"
 	   :target (file+head "%<%Y-%m-%d>.org"
 			      "#+title: %<%Y-%m-%d>\n#+filetags: :Daily:\n [[id:24a82cf2-bc51-4b01-81f7-53968e483ee2][Daily Journal]]\n* [/] Daily Todos\n1. [ ]\n2. [ ]\n3. [ ]\n* Daily Tasks\n* Morning Thoughts\n* Evening Reflections")))))
-#+END_SRC
+#+end_src
 ***** Initialisation
 #+begin_src elisp
 (use-package org-roam
@@ -3205,7 +3205,7 @@ We need a function to find the lsp server when it's installed through a nix shel
 **** Org Babel
 Calling org-babel languages in the following form saves a lot on startup time.
 ***** Shell
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package ob-shell
   :straight org
   :commands
@@ -3216,17 +3216,17 @@ Calling org-babel languages in the following form saves a lot on startup time.
    org-babel-expand-body:bash)
   :config
   (add-to-list 'org-babel-load-languages '(shell . t)))
-#+END_SRC
+#+end_src
 ***** Python
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package ob-python
   :straight org
   :commands
   (org-babel-execute:python
    org-babel-expand-body:python))
-#+END_SRC
+#+end_src
 ***** Emacs Lisp
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package ob-emacs-lisp
   :straight org
   :commands
@@ -3234,33 +3234,33 @@ Calling org-babel languages in the following form saves a lot on startup time.
    org-babel-expand-body:emacs-lisp
    org-babel-execute:elisp
    org-babel-expand-body:elisp))
-#+END_SRC
+#+end_src
 ***** JS
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package ob-js
   :straight org
   :commands
   (org-babel-execute:js
    org-babel-expand-body:js))
-#+END_SRC
+#+end_src
 ***** LaTeX
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package ob-latex
   :straight org
   :commands
   (org-babel-execute:latex
    org-babel-expand-body:latex))
-#+END_SRC
+#+end_src
 ***** Haskell
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package ob-haskell
   :straight org
   :commands
   (org-babel-execute:haskell
    org-babel-expand-body:haskell))
-#+END_SRC
+#+end_src
 ***** C/C++
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package ob-C
   :straight org
   :commands
@@ -3268,13 +3268,13 @@ Calling org-babel languages in the following form saves a lot on startup time.
    org-babel-expand-body:C
    org-babel-execute:C++
    org-babel-expand-body:C++))
-#+END_SRC
+#+end_src
 ***** CANCELLED ob-async
-#+BEGIN_SRC elisp :tangle no
+#+begin_src elisp :tangle no
 (use-package ob-async
   :after org
   :defer t)
-#+END_SRC
+#+end_src
 **** Evil Org
 #+begin_src elisp
 (use-package evil-org
@@ -3314,7 +3314,7 @@ Calling org-babel languages in the following form saves a lot on startup time.
   (jl/org-caldav-keybindings))
 #+end_src
 **** Org Present
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package org-present
   :defer t
   :after org
@@ -3323,7 +3323,7 @@ Calling org-babel languages in the following form saves a lot on startup time.
 		   :branch "master"
 		   )
   )
-#+END_SRC
+#+end_src
 **** Org Capture
 #+begin_src elisp :tangle no
 (with-eval-after-load 'org-capture
@@ -3343,13 +3343,13 @@ Calling org-babel languages in the following form saves a lot on startup time.
   (add-hook 'org-capture-mode-hook 'org-capture-start))
 #+end_src
 **** Table of Contents
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package toc-org
   :defer t
   :after org
   :hook (org-mode . toc-org-mode)
   )
-  #+END_SRC
+  #+end_src
 **** Org Protocol
 #+begin_src elisp :tangle no
 (use-package org-protocol
@@ -3364,7 +3364,7 @@ Calling org-babel languages in the following form saves a lot on startup time.
   :straight org)
 #+end_src
 **** org-cv
-#+BEGIN_SRC elisp :tangle no
+#+begin_src elisp :tangle no
 (use-package ox-altacv
   :after org
   :straight (:host github :repo "Titan-C/org-cv" :branch "master" :files ("ox-altacv.el" "org-cv-utils.el"))
@@ -3380,34 +3380,34 @@ Calling org-babel languages in the following form saves a lot on startup time.
     :states '(normal visual operator)
     :major-modes t
     "ec" 'make-cv))
-#+END_SRC
+#+end_src
 **** ox-extra
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package ox-extra
   :after org
   :straight org-contrib
   :config
   (ox-extras-activate '(latex-header-blocks ignore-headlines)))
-#+END_SRC
+#+end_src
 **** engrave faces
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package engrave-faces
   :after org
   :config
   (setq org-latex-src-block-backend 'engraved))
-#+END_SRC
+#+end_src
 **** org-link
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package orglink
   :init
   (global-orglink-mode))
-#+END_SRC
+#+end_src
 **** org-tree-slide-mode
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package org-tree-slide)
-#+END_SRC
+#+end_src
 **** TODO Org-projectile
-#+BEGIN_SRC elisp :tangle no
+#+begin_src elisp :tangle no
 (use-package org-projectile
   :bind (("C-c n p" . org-projectile-project-todo-completing-read)
          ("C-c c" . org-capture))
@@ -3418,7 +3418,7 @@ Calling org-babel languages in the following form saves a lot on startup time.
     (setq org-agenda-files (append org-agenda-files (org-projectile-todo-files)))
     (push (org-projectile-project-todo-entry) org-capture-templates))
   :ensure t)
-#+END_SRC
+#+end_src
 *** LaTeX
 **** Keybindings
 #+begin_src elisp
@@ -3623,10 +3623,10 @@ Calling org-babel languages in the following form saves a lot on startup time.
   (auctex-latexmk-setup))
 #+end_src
 **** lsp-latex
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package lsp-latex
   :defer t)
-#+END_SRC
+#+end_src
 *** BibTex
 **** Ivy-bibtex
 #+begin_src elisp :tnagle no
@@ -3641,7 +3641,7 @@ Calling org-babel languages in the following form saves a lot on startup time.
 #+end_src
 **** Org Ref
 ***** Keybindings
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (defun jl/org-ref-keys ()
   (evil-define-key 'normal bibtex-mode-map
     (kbd "C-j") 'org-ref-bibtex-next-entry
@@ -3679,7 +3679,7 @@ Calling org-babel languages in the following form saves a lot on startup time.
     "ld" 'doi-utils-add-bibtex-entry-from-doi
     "li" 'isbn-to-bibtex
     "lp" 'pubmed-insert-bibtex-from-pmid))
-#+END_SRC
+#+end_src
 ***** Initialisation
 #+begin_src elisp
 (use-package org-ref
@@ -3725,7 +3725,7 @@ Calling org-babel languages in the following form saves a lot on startup time.
   #+end_src
 *** Markdown
 **** Initialisation
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package markdown-mode
   :mode
   (("\\.mkd\\'" . markdown-mode)
@@ -3838,9 +3838,9 @@ Calling org-babel languages in the following form saves a lot on startup time.
 
   (add-to-list 'markdown-css-paths "https://cdn.simplecss.org/simple.min.css")
   )
-#+END_SRC
+#+end_src
 **** markdown-toc
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package markdown-toc
   :general
   (jl/major-modes
@@ -3848,14 +3848,14 @@ Calling org-babel languages in the following form saves a lot on startup time.
     :states '(normal visual operator)
     :major-modes t
     "it" 'markdown-toc-generate-toc))
-#+END_SRC
+#+end_src
 ** Other
 *** Yaml
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package yaml-mode
   :hook (yaml-mode . (lambda () (variable-pitch-mode 0)))
   :defer t)
-#+END_SRC
+#+end_src
 * Readers
 ** Elfeed
 *** Initialisation
@@ -3911,21 +3911,21 @@ Calling org-babel languages in the following form saves a lot on startup time.
 #+end_src
 *** Elfeed Goodies
 This gives a nice view to Elfeed, but makes it hard to watch videos.
-#+BEGIN_SRC elisp :tangle no
+#+begin_src elisp :tangle no
 (use-package elfeed-goodies
   :after elfeed
   :config
   (elfeed-goodies/setup))
-#+END_SRC
+#+end_src
 *** Elfeed score
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package elfeed-score
   :after elfeed
   :config
   (elfeed-score-enable))
-#+END_SRC
+#+end_src
 *** elfeed-tube
-#+BEGIN_SRC elisp :tangle no
+#+begin_src elisp :tangle no
 (use-package elfeed-tube
   :straight (:host github :repo "karthink/elfeed-tube")
   :after elfeed
@@ -3957,7 +3957,7 @@ This gives a nice view to Elfeed, but makes it hard to watch videos.
               ("C-c C-f" . elfeed-tube-mpv-follow-mode)
               ("C-c C-w" . elfeed-tube-mpv-where)))
 
-#+END_SRC
+#+end_src
 ** TODO Elpher
 #+begin_src elisp
 (use-package elpher
@@ -4064,7 +4064,7 @@ This gives a nice view to Elfeed, but makes it hard to watch videos.
   :after erc)
 #+end_src
 ** ement.el
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package plz
   :defer t
  :straight (:host github :repo "alphapapa/plz.el" :branch "master" :files ("*.el")))
@@ -4077,7 +4077,7 @@ This gives a nice view to Elfeed, but makes it hard to watch videos.
   (jl/SPC-keys
     :modes '(normal visual operator)
     "arm" 'ement-connect))
-#+END_SRC
+#+end_src
 ** EWW
 #+begin_src elisp
 (use-package eww
@@ -4442,7 +4442,7 @@ there are no attachments."
   )
 #+end_src
 *** org-mime
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package org-mime
   :defer t
   :commands (org-mime-edit-mail-in-org-mode
@@ -4457,12 +4457,12 @@ there are no attachments."
     "h" '(:ignore t :which-key "html")
     "ho" 'org-mime-edit-mail-in-org-mode
     "hh" 'org-mime-htmlize))
-#+END_SRC
+#+end_src
 ** mpv
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package mpv
   :defer t)
-#+END_SRC
+#+end_src
 * Avy
 #+begin_src elisp
 (use-package avy
@@ -4498,9 +4498,9 @@ there are no attachments."
       (browse-url-at-point))))
 #+end_src
 * Auto-complete and spelling
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package ispell)
-#+END_SRC
+#+end_src
 ** Yasnippet
 #+begin_src elisp
 (use-package yasnippet
@@ -4542,25 +4542,25 @@ there are no attachments."
   )
 #+end_src
 *** Prescient company
-#+BEGIN_SRC elisp :tangle no
+#+begin_src elisp :tangle no
 (use-package company-prescient
   :after company
   :config
   (company-prescient-mode 1)
   )
-#+END_SRC
+#+end_src
 *** Company-shell
-#+BEGIN_SRC elisp :tangle no
+#+begin_src elisp :tangle no
 (use-package company-shell
   :defer t
   :after sh
   :config
   (add-to-list 'company-backends 'company-shell)
   )
-#+END_SRC
+#+end_src
 ** Corfu
 *** Initialisation
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package corfu
   :general
   (:keymaps 'corfu-map
@@ -4607,18 +4607,18 @@ there are no attachments."
   (general-define-key :keymaps 'corfu-map
                       :states 'insert
                       [escape] 'jl/corfu-quit))
-#+END_SRC
+#+end_src
 *** kind-icon
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package kind-icon
   :after corfu
   :custom
   (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
   :config
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
-#+END_SRC
+#+end_src
 *** corfu-doc
-#+BEGIN_SRC elisp :tangle no
+#+begin_src elisp :tangle no
 (use-package corfu-doc
   ;; NOTE 2022-02-05: At the time of writing, `corfu-doc' is not yet on melpa
   :straight (corfu-doc :type git :host github :repo "galeo/corfu-doc")
@@ -4633,9 +4633,9 @@ there are no attachments."
   ;; extra-safe that this is set when corfu-doc is loaded. I do not want
   ;; documentation shown in both the echo area and in the `corfu-doc' popup.
   (corfu-echo-documentation nil))
-#+END_SRC
+#+end_src
 *** cape
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package cape
   :after corfu
   :config
@@ -4651,7 +4651,7 @@ there are no attachments."
   (add-to-list 'completion-at-point-functions #'cape-tex)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   )
-#+END_SRC
+#+end_src
 ** Flycheck
 #+begin_src elisp
 (use-package flycheck
@@ -4661,11 +4661,11 @@ there are no attachments."
   (global-flycheck-mode t))
 #+end_src
 *** Bashate
-#+BEGIN_SRC elisp :tangle no
+#+begin_src elisp :tangle no
 (use-package flycheck-bashate
   :defer t
   :hook (sh-mode . flycheck-bashate-setup))
-#+END_SRC
+#+end_src
 ** Flyspell
 *** Initialisation
 #+begin_src elisp :tangle no
@@ -4778,11 +4778,11 @@ SCOPE can be:
   (ispell-set-spellchecker-params))
 #+end_src
 ** Flymake collection
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package flymake-collection)
-#+END_SRC
+#+end_src
 ** Spell-fu
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package spell-fu
   :hook ((prog-mode text-mode) . spell-fu-mode)
   :general
@@ -4801,7 +4801,7 @@ SCOPE can be:
         ispell-grep-command "rg"
         ispell-use-framepop-p nil
         spell-fu-faces-exclude '(org-block-begin-line org-block-end-line org-block org-code org-date org-drawer org-document-info-keyword org-ellipsis org-link org-meta-line org-properties org-properties-value org-special-keyword org-src org-tag org-verbatim)))
-#+END_SRC
+#+end_src
 * Tools
 ** Undo Tree
 #+begin_src elisp
@@ -4849,7 +4849,7 @@ SCOPE can be:
     "Se" 'iedit-mode))
 #+end_src
 *** wgrep
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package wgrep
   :general
 (jl/major-modes
@@ -4868,26 +4868,26 @@ SCOPE can be:
 
   (jl/SPC-keys
     "Sw" 'wgrep-change-to-wgrep-mode))
-#+END_SRC
+#+end_src
 ** Simple httpd
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package simple-httpd
   :defer t
   :commands (httpd-serve-directory))
-#+END_SRC
+#+end_src
 ** Define word
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package define-word
   :defer t
   :commands (define-word define-word-at-point))
-#+END_SRC
+#+end_src
 ** Pair Programming
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package floobits
   :defer t)
-#+END_SRC
+#+end_src
 ** edit-server
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package edit-server
   :commands edit-server-start
   :init (if after-init-time
@@ -4904,16 +4904,16 @@ SCOPE can be:
   ;;                 (menu-bar-lines . t)
   ;;                 (window-system . x)))
 )
-#+END_SRC
+#+end_src
 ** esup
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package esup
   :commands (esup)
   :config
   (setq esup-depth 0))
-#+END_SRC
+#+end_src
 ** openwith
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package openwith
   :after (dired vertico)
   :config
@@ -4926,10 +4926,10 @@ SCOPE can be:
   :straight gnus
   :config
   (add-to-list 'mm-inhibit-file-name-handlers 'openwith-file-handler))
-#+END_SRC
+#+end_src
 * Shells
 ** Term
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package term
   :commands (term)
   :general
@@ -4941,16 +4941,16 @@ SCOPE can be:
 
   ;; Match the default Bash shell prompt.  Update this if you have a custom prompt
   (term-prompt-regexp "^[^#$%>\n]*[#$%>] *"))
-#+END_SRC
+#+end_src
 *** eterm 256colours
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package eterm-256color
   :defer t
   :after term
   :hook (term-mode . eterm-256color-mode))
-#+END_SRC
+#+end_src
 ** Vterm
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package vterm
   :general
   (jl/SPC-keys
@@ -4968,15 +4968,15 @@ SCOPE can be:
   (defalias 'eshell/v 'eshell-exec-visual)
   :config
   (eshell-vterm-mode))
-#+END_SRC
+#+end_src
 ** Eshell
 *** Keybindings
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (defun jl/eshell-global-keys ()
   )
-#+END_SRC
+#+end_src
 *** Initialisation
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (defun efs/configure-eshell ()
   ;; Save command history when commands are entered
   (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
@@ -5017,32 +5017,32 @@ SCOPE can be:
     (setq eshell-visual-commands '("htop" "zsh" "vim" "nmtui")))
 
   (eshell-git-prompt-use-theme 'powerline))
-    #+END_SRC
+    #+end_src
 *** eshell-did-you-mean
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package eshell-did-you-mean
   :straight (:host github :repo "xuchunyang/eshell-did-you-mean" :branch "master" :files ("*.el"))
   :after eshell
   :config
   (eshell-did-you-mean-setup))
-#+END_SRC
+#+end_src
 *** esh-help
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package esh-help
   :after eshell
   :hook (eshell-mode . eldoc-mode)
   :config
   (setup-esh-help-eldoc))
-#+END_SRC
+#+end_src
 *** eshell-syntax-highlighting
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package eshell-syntax-highlighting
   :after eshell
   :config
   (eshell-syntax-highlighting-global-mode +1))
-#+END_SRC
+#+end_src
 *** emacs-fish-completion
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package fish-completion
   :hook (eshell-mode . fish-completion-mode)
   :custom
@@ -5050,23 +5050,23 @@ SCOPE can be:
   :after eshell
   :config
   (global-fish-completion-mode))
-#+END_SRC
+#+end_src
 * Fun
 ** Snow
-#+BEGIN_SRC elisp :tangle no
+#+begin_src elisp :tangle no
 (use-package snow
   :defer t
   :commands (snow))
-#+END_SRC
+#+end_src
 ** Fireplace
-#+BEGIN_SRC elisp :tangle no
+#+begin_src elisp :tangle no
 (use-package fireplace
   :defer t
   :commands (fireplace))
-#+END_SRC
+#+end_src
 * Direnv
 ** direnv
-#+BEGIN_SRC elisp :tangle no
+#+begin_src elisp :tangle no
 (use-package direnv
   :defer .1
   :general
@@ -5079,9 +5079,9 @@ SCOPE can be:
   (direnv-mode)
   :custom
   (direnv-always-show-summary nil))
-#+END_SRC
+#+end_src
 ** envrc
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (use-package envrc
   :defer .1
   :general
@@ -5094,10 +5094,10 @@ SCOPE can be:
     "dR" 'envrc-reload-all)
   :config
   (envrc-global-mode))
-#+END_SRC
+#+end_src
 * Other Config
 Tangle this if there is another configuration file you want to load after loading this one
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (if (file-exists-p (concat user-emacs-directory "./config.el"))
     (load-file (concat user-emacs-directory "/config.el")))
-#+END_SRC
+#+end_src
