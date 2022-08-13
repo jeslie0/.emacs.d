@@ -1105,18 +1105,11 @@ Allows for partial searching in vertico.
   (jl/SPC-keys
     "gg"  '(:ignore t :which-key "gutter")
     "ggn" 'diff-hl-next-hunk
-    ;; "gge" 'git-gutter:end-of-hunk
     "ggm" 'diff-hl-mark-hunk
     "ggP" 'diff-hl-show-hunk
     "ggp" 'diff-hl-previous-hunk
     "ggr" 'diff-hl-revert-hunk
-    ;; "ggR" 'git-gutter:set-start-revision
-    "ggs" 'diff-hl-stage-current-hunk
-    ;; "ggts" 'git-gutter:start-update-timer
-    ;; "ggtc" 'git-gutter:cancel-update-timer
-    ;; "ggS" 'git-gutter:statistic
-    ;; "ggu" 'git-gutter:update-all-windows
-    )
+    "ggs" 'diff-hl-stage-current-hunk)
   :hook
   ((prog-mode text-mode) . diff-hl-mode)
   ((prog-mode text-mode) . diff-hl-flydiff-mode)
@@ -1136,6 +1129,8 @@ Allows for partial searching in vertico.
      (change . "┃")
      (unknown . "?")
      (ignored . "i")))
+  :init
+  (setq diff-hl-disable-on-remote t) ; Can cause delays on TRAMP
   :config
   (define-fringe-bitmap 'diff-hl-insert
     [#b00000011] nil nil '(center repeated))
@@ -1144,6 +1139,7 @@ Allows for partial searching in vertico.
   (define-fringe-bitmap 'diff-hl-delete
     [#b00000011] nil nil '(center repeated))
 
+  ;; Only needed when using a DOOM theme
   (doom-themes-set-faces nil
     '(diff-hl-insert :foreground vc-added :background bg)
     '(diff-hl-delete :foreground vc-deleted :background bg)
