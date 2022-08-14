@@ -1860,6 +1860,12 @@ Multiple major modes!
   :defer t
   :after tree-sitter)
 #+end_src
+**** Tree sitter indent
+#+begin_src elisp
+(use-package tree-sitter-indent
+  :defer t
+  :after tree-sitter)
+#+end_src
 ** Proof Assistants
 *** Agda
 **** Initialisation
@@ -2050,11 +2056,10 @@ For most programming languages, the development tools will be installed through 
 (use-package csharp-mode
   :defer t
   :config
-  (setq lsp-csharp-server-path (executable-find "omnisharp"))
-  (add-to-list 'auto-mode-alist '("\\.cs\\'" . csharp-tree-sitter-mode)))
-
-(use-package omnisharp
-  :defer t)
+  (setq lsp-csharp-server-path (executable-find "OmniSharp"))
+  (add-to-list 'auto-mode-alist '("\\.cs\\'" . csharp-tree-sitter-mode))
+  (add-to-list 'eglot-server-programs '(csharp-mode . ("OmniSharp" "-lsp")))
+  (add-to-list 'eglot-server-programs '(csharp-tree-sitter-mode . ("OmniSharp" "-lsp"))))
 #+end_src
 *** Elm
 #+begin_src elisp
