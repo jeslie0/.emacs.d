@@ -2562,6 +2562,21 @@ We actually install the language server through Emacs, so we don't need to worry
 *** Javascript
 **** Initialisation
 #+begin_src elisp
+(use-package js-mode
+  :straight js
+  :hook (((js-mode) . tree-sitter-mode)
+         ((js-mode) . tree-sitter-hl-mode)))
+#+end_src
+**** JS Doc
+#+begin_src elisp
+(use-package js-doc
+  :general
+  (jl/SPC-keys
+    "if" 'js-doc-insert-function-doc
+    "it" 'js-doc-insert-tag))
+#+end_src
+**** RJSX mode
+#+begin_src elisp :tangle no
 (use-package rjsx-mode
   :general
   (jl/major-modes
