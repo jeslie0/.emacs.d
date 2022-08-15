@@ -1824,15 +1824,17 @@ Multiple major modes!
 
     "=Be" 'eglot-events-buffer
     "=Bs" 'eglot-stderr-buffer)
-  :custom
-  (eglot-confirm-server-initiated-edits nil)
-  (eglot-extend-to-xref)
-  :config
   (general-define-key
    :keymaps 'eglot-mode-map
    :states '(normal operator)
    "K" 'eldoc-box-eglot-help-at-point)
+  :custom
+  (eglot-confirm-server-initiated-edits nil)
+  (eglot-extend-to-xref)
+  :config
   (add-to-list 'eglot-server-programs '((tex-mode context-mode texinfo-mode bibtex-mode) "texlab"))
+  (add-to-list 'eglot-server-programs '(csharp-mode . ("OmniSharp" "-lsp")))
+  (add-to-list 'eglot-server-programs '(csharp-tree-sitter-mode . ("OmniSharp" "-lsp")))
   (add-to-list 'eglot-server-programs '(python-mode . ("python-language-server" ""))))
 #+end_src
 *** Tree sitter
@@ -2024,9 +2026,10 @@ For most programming languages, the development tools will be installed through 
   :config
   (setq clang-format-style-option "llvm"))
 #+end_src
-**** TODO gendoxy
+**** Gendoxy
 #+begin_src elisp
 (use-package gendoxy
+  :defer t
   :straight (:host github :repo "mp81ss/gendoxy" :branch "master" :files ("*.el"))
   :general
  (jl/major-modes
@@ -2040,23 +2043,20 @@ For most programming languages, the development tools will be installed through 
    "dg" 'gendoxy-group
    "dG" 'gendoxy-group-header
    "ds" 'gendoxy-group-start
-   "de" 'gendoxy-group-end)
-  :defer t)
+   "de" 'gendoxy-group-end))
 #+end_src
 **** CANCELLED r-tags
 #+begin_src elisp :tangle no
 (use-package rtags
     :defer t)
 #+end_src
-*** TODO C#
+*** C#
 #+begin_src elisp
 (use-package csharp-mode
   :defer t
   :config
   (setq lsp-csharp-server-path (executable-find "OmniSharp"))
-  (add-to-list 'auto-mode-alist '("\\.cs\\'" . csharp-tree-sitter-mode))
-  (add-to-list 'eglot-server-programs '(csharp-mode . ("OmniSharp" "-lsp")))
-  (add-to-list 'eglot-server-programs '(csharp-tree-sitter-mode . ("OmniSharp" "-lsp"))))
+  (add-to-list 'auto-mode-alist '("\\.cs\\'" . csharp-tree-sitter-mode)))
 #+end_src
 *** Elm
 #+begin_src elisp
@@ -2573,7 +2573,10 @@ We actually install the language server through Emacs, so we don't need to worry
 #+begin_src elisp
 (use-package js-doc
   :general
-  (jl/SPC-keys
+  (jl/major-modes
+    :keymaps '(js-mode rjsx-mode)
+    :states '(normal visual operator)
+    :major-modes t
     "if" 'js-doc-insert-function-doc
     "it" 'js-doc-insert-tag))
 #+end_src
@@ -2605,7 +2608,6 @@ We actually install the language server through Emacs, so we don't need to worry
 (add-hook 'js2-mode-hook (lambda ()
                            (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))
 #+end_src
-
 *** Python
 **** Python LSP
 We need a function to find the lsp server when it's installed through a nix shell.
