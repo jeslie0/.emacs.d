@@ -1169,33 +1169,14 @@ Allows for partial searching in vertico.
 #+end_src
 *** VC
 #+begin_src elisp
-(jl/SPC-keys
-  "gv" '(:ignore t :which-key "VC")
-  "gvM" '(:ignore t :which-key "Mergebase")
-  "gv+" 'vc-update
-  "gv=" 'vc-diff
-  "gva" 'vc-update-change-log
-  "gvb" 'vc-switch-backend
-  "gvd" 'vc-dir
-  "gvg" 'vc-annotate
-  "gvh" 'vc-region-history
-  "gvi" 'vc-register
-  "gvl" 'vc-print-log
-  "gvm" 'vc-merge
-  "gvr" 'vc-retrieve-tag
-  "gvs" 'vc-create-tag
-  "gvu" 'vc-revert
-  "gvv" 'vc-next-action
-  "gvx" 'vc-delete-file
-  "gv~" 'vc-revision-other-window
-  "gvD" 'vc-root-diff
-  "gvG" 'vc-ignore
-  "gvI" 'vc-log-incoming
-  "gvL" 'vc-print-root-log
-  "gvO" 'vc-log-outgoing
-  "gvP" 'vc-push
-  "gvM" 'vc-diff-mergebase
-  "gvM" 'vc-log-mergebase)
+(use-package vc
+  :general
+  (jl/SPC-keys
+    :prefix-map 'vc-prefix-map
+    :prefix "SPC g v")
+  (jl/SPC-keys
+    "gv" '(:ignore t :which-key "VC")
+    "gvM" '(:ignore t :which-key "Mergebase")))
 #+end_src
 ** Treemacs
 *** Initialisation
