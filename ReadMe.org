@@ -39,12 +39,12 @@
   - [[#vertico][Vertico]]
 - [[#project-management][Project Management]]
   - [[#projectile][Projectile]]
+  - [[#projectel][Project.el]]
   - [[#gitvc][Git/VC]]
   - [[#treemacs][Treemacs]]
   - [[#helpful][Helpful]]
   - [[#eldoc][Eldoc]]
 - [[#dashboard][Dashboard]]
-  - [[#functions-1][Functions]]
   - [[#initialisation][Initialisation]]
 - [[#minor-modes][Minor modes]]
   - [[#rainbow-delimiters][Rainbow Delimiters]]
@@ -1004,7 +1004,7 @@ Allows for partial searching in vertico.
 * Project Management
 ** Projectile
 *** Initialisation
-#+begin_src elisp
+#+begin_src elisp :tangle no
 (use-package projectile
   :diminish projectile-mode
   :general
@@ -1035,7 +1035,7 @@ Allows for partial searching in vertico.
   (projectile-mode))
 #+end_src
 *** consult-projectile
-#+begin_src elisp
+#+begin_src elisp :tangle no
 (use-package consult-projectile
   ;; :after (consult projectile)
   :straight (consult-projectile :type git :host gitlab :repo "OlMon/consult-projectile" :branch "master")
@@ -1047,6 +1047,25 @@ Allows for partial searching in vertico.
     "pp" 'consult-projectile-switch-project
     "pb" 'consult-projectile-switch-to-buffer
     "pP" 'consult-projectile))
+#+end_src
+** Project.el
+*** Initialisation
+#+begin_src elisp
+(use-package project
+  :general
+  (jl/SPC-keys
+    "p" '(:ignore t :which-key "project.el"))
+  (jl/SPC-keys
+    :prefix "SPC p"
+    :prefix-map 'project-prefix-map))
+#+end_src
+*** Consult project extra
+#+begin_src elisp
+(use-package consult-project-extra
+  :after (consult)
+  :general
+  (jl/SPC-keys
+    "pf" 'consult-project-extra-find))
 #+end_src
 ** Git/VC
 *** Magit
@@ -1304,7 +1323,7 @@ Allows for partial searching in vertico.
   :after (treemacs evil))
 #+end_src
 *** Treemacs projectile
-#+begin_src elisp
+#+begin_src elisp :tangle no
 (use-package treemacs-projectile
   :defer t
   :after (treemacs projectile))
@@ -1388,9 +1407,6 @@ Provides better documentation.
   (set-face-attribute 'eldoc-box-body nil :background (face-background 'solaire-default-face)))
 #+end_src
 * Dashboard
-** Functions
-#+begin_src elisp
-#+end_src
 ** Initialisation
 #+begin_src elisp
 (use-package dashboard
@@ -1412,6 +1428,7 @@ Provides better documentation.
 
   ;; Content is not centered by default. To center, set
   (dashboard-center-content t)
+  (dashboard-projects-backend 'project-el)
 
   ;; To disable shortcut "jump" indicators for each section, set
   (dashboard-show-shortcuts nil)
@@ -1419,9 +1436,8 @@ Provides better documentation.
   (dashboard-set-file-icons t)
   (dashboard-set-init-info t)
   (dashboard-items '((recents . 5)
-		     (projects . 5)
-                     (bookmarks . 5)
-))
+		     ;; (projects . 5)
+                     (bookmarks . 5)))
 
   (initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 
