@@ -1133,7 +1133,7 @@ Allows for partial searching in vertico.
   ((prog-mode text-mode) . diff-hl-mode)
   ((prog-mode text-mode) . diff-hl-flydiff-mode)
   ((prog-mode text-mode) . diff-hl-show-hunk-mouse-mode)
-  (dired-mode . diff-hl-dired-mode)
+  (dired-mode . diff-hl-dired-mode-unless-remote)
   (magit-pre-refresh . diff-hl-magit-pre-refresh)
   (magit-post-refresh . diff-hl-magit-post-refresh)
 
@@ -1148,8 +1148,6 @@ Allows for partial searching in vertico.
      (change . "┃")
      (unknown . "?")
      (ignored . "i")))
-  :init
-  (setq diff-hl-disable-on-remote t) ; Can cause delays on TRAMP
   :config
   (define-fringe-bitmap 'diff-hl-insert
     [#b00000011] nil nil '(center repeated))
