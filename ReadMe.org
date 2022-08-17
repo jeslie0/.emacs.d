@@ -305,6 +305,11 @@ Requires emacs version >=28.
   (interactive)
   (find-file-existing (concat user-emacs-directory "ReadMe.org")))
 
+(defun find-emacs-config ()
+  "Edit the `dotfile', in the current window."
+  (interactive)
+  (find-file-existing (concat user-emacs-directory "config.el")))
+
 (defun find-system-dotfile ()
   "Edit the `dotfile', in the current window."
   (interactive)
@@ -370,7 +375,6 @@ Taken from [[https://emacsredux.com/blog/2013/05/04/rename-file-and-buffer/][ema
     "e"  '(:ignore t :which-key "elisp")
     "f"  '(:which-key "files")
     "fe" '(:which-key "Emacs")
-    "g"  '(:ignore t :which-key "git/vc")
     "h"  '(:ignore t :which-key "help")
 
     "i"  '(:ignore t :which-key "insertion")
@@ -384,11 +388,12 @@ Taken from [[https://emacsredux.com/blog/2013/05/04/rename-file-and-buffer/][ema
 
     "!" 'eshell
     "fc" 'copy-file
-    "fd" 'delete-file-and-buffer
+    "fD" 'delete-file-and-buffer
     "fed" '(find-emacs-dotfile :which-key "Open init file")
+    "fec" '(find-emacs-config)
     "fnd" '(find-system-dotfile :which-key "Open dotfiles")
     "fR" 'rename-file-and-buffer
-    "fs" '(save-buffer :which-key "save")
+    "fs" 'save-buffer
     "qq" 'kill-emacs
     "ts" '(hydra-text-scale/body :which-key "scale text")
     "w-" 'split-window-below
@@ -999,7 +1004,18 @@ Allows for partial searching in vertico.
 #+begin_src elisp
 (use-package consult-tramp
   :straight (:host github :repo "Ladicle/consult-tramp")
-  :after consult)
+  :after consult
+  :general
+  (jl/SPC-keys
+    "fT" 'consult-tramp))
+#+end_src
+*** consult-dir
+#+begin_src elisp
+(use-package consult-dir
+  :after consult
+  :general
+  (jl/SPC-keys
+    "fd" 'consult-dir))
 #+end_src
 * Project Management
 ** Projectile
