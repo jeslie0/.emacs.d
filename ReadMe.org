@@ -1176,6 +1176,18 @@ Allows for partial searching in vertico.
     "gv" '(:ignore t :which-key "VC")
     "gvM" '(:ignore t :which-key "Mergebase")))
 #+end_src
+
+*** Smerge
+#+begin_src elisp
+(use-package smerge-mode
+  :general
+  (jl/SPC-keys
+    "gm" '(:ignore t :which-key "smerge"
+    "gm=" '(:ignore t :which-key "Diff")))
+  (jl/SPC-keys
+    :prefix "SPC g m"
+    :prefix-map 'smerge-basic-map))
+#+end_src
 ** Treemacs
 *** Initialisation
 #+begin_src elisp
@@ -1822,14 +1834,14 @@ Multiple major modes!
 
     "=Be" 'eglot-events-buffer
     "=Bs" 'eglot-stderr-buffer)
-  (general-define-key
-   :keymaps 'eglot-mode-map
-   :states '(normal operator)
-   "K" 'eldoc-box-eglot-help-at-point)
   :custom
   (eglot-confirm-server-initiated-edits nil)
   (eglot-extend-to-xref)
   :config
+  (general-define-key
+   :keymaps 'eglot-mode-map
+   :states '(normal operator)
+   "K" 'eldoc-box-eglot-help-at-point)
   (add-to-list 'eglot-server-programs '((tex-mode context-mode texinfo-mode bibtex-mode) "texlab"))
   (add-to-list 'eglot-server-programs '(csharp-mode . ("OmniSharp" "-lsp")))
   (add-to-list 'eglot-server-programs '(csharp-tree-sitter-mode . ("OmniSharp" "-lsp")))
@@ -2561,7 +2573,7 @@ We actually install the language server through Emacs, so we don't need to worry
 #+end_src
 *** Javascript
 **** Initialisation
-#+begin_src elisp
+#+begin_src elisp :tangle no
 (use-package js-mode
   :straight js
   :hook (((js-mode) . tree-sitter-mode)
@@ -2579,7 +2591,7 @@ We actually install the language server through Emacs, so we don't need to worry
     "it" 'js-doc-insert-tag))
 #+end_src
 **** RJSX mode
-#+begin_src elisp :tangle no
+#+begin_src elisp
 (use-package rjsx-mode
   :general
   (jl/major-modes
@@ -4948,6 +4960,18 @@ Seamless editing of privileged files, by using Tramp. I prefer to choose to reop
   :general
   (jl/SPC-keys
     "fE" 'sudo-edit))
+#+end_src
+** TODO artist mode
+#+begin_src elisp :tangle no
+(use-package artist
+  :defer t
+  :general
+ (jl/major-modes
+   :prefix-map 'artist-mode-map
+   :keymaps 'picture-mode-map
+   :states '(normal visual operator)
+   :major-modes t
+   ) )
 #+end_src
 * Shells
 ** Term
