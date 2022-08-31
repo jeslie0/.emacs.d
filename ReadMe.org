@@ -1001,15 +1001,6 @@ Allows for partial searching in vertico.
 #+begin_src elisp
 (use-package embark-consult)
 #+end_src
-*** consult-tramp
-#+begin_src elisp
-(use-package consult-tramp
-  :straight (:host github :repo "Ladicle/consult-tramp")
-  :after consult
-  :general
-  (jl/SPC-keys
-    "fT" 'consult-tramp))
-#+end_src
 *** consult-dir
 #+begin_src elisp
 (use-package consult-dir
