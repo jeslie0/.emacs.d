@@ -98,6 +98,7 @@
   - [[#openwith][openwith]]
   - [[#auto-sudoedit][auto-sudoedit]]
   - [[#sudo-edit][sudo-edit]]
+  - [[#artist-mode][artist mode]]
 - [[#shells][Shells]]
   - [[#term][Term]]
   - [[#vterm][Vterm]]
@@ -506,7 +507,7 @@ We use the [[https://github.com/abo-abo/hydra][Hydra]] package for transient buf
 (use-package evil-tutor
   :general
   (jl/SPC-keys
-    "hv" 'evil-tutor-start))
+    "hTv" 'evil-tutor-start))
 #+end_src
 ** Which-key
 Adds the popup for key commands with mulitple key presses.
@@ -1371,6 +1372,7 @@ Provides better documentation.
   :general
   (jl/SPC-keys
     "h" '(:ignore t :which-key "help")
+    "hT" '(:ignore t :which-key "Tutorials")
 
     "hi" 'info
     "hf" 'describe-function
@@ -1380,7 +1382,7 @@ Provides better documentation.
     "hk" 'describe-key
     "hs" 'describe-symbol
 
-    "he" 'help-with-tutorial
+    "hTe" 'help-with-tutorial
     "hM" 'view-echo-area-messages)
   ;; :custom
   ;; (counsel-describe-function-function #'helpful-callable)
@@ -1443,7 +1445,7 @@ Provides better documentation.
   (dashboard-set-file-icons t)
   (dashboard-set-init-info t)
   (dashboard-items '((recents . 5)
-		     ;; (projects . 5)
+		     (projects . 5)
                      (bookmarks . 5)))
 
   (initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
@@ -1824,7 +1826,7 @@ Multiple major modes!
     "iS" 'lsp-ivy-global-workspace-symbol))
 #+end_src
 *** Eglot
-#+begin_src elisp
+#+begin_src elisp :tangle no
 (use-package eglot
   :commands (eglot)
   :general
@@ -2595,17 +2597,6 @@ We actually install the language server through Emacs, so we don't need to worry
   :hook (((js-mode) . tree-sitter-mode)
          ((js-mode) . tree-sitter-hl-mode)))
 #+end_src
-**** JS Doc
-#+begin_src elisp
-(use-package js-doc
-  :general
-  (jl/major-modes
-    :keymaps '(js-mode rjsx-mode)
-    :states '(normal visual operator)
-    :major-modes t
-    "if" 'js-doc-insert-function-doc
-    "it" 'js-doc-insert-tag))
-#+end_src
 **** RJSX mode
 #+begin_src elisp
 (use-package rjsx-mode
@@ -2619,6 +2610,18 @@ We actually install the language server through Emacs, so we don't need to worry
   :mode ("\\.js\\'" . rjsx-mode)
   :config
   (setq sgml-basic-offset 4))
+#+end_src
+**** JS Doc
+#+begin_src elisp
+(use-package js-doc
+  :after (:any js-mode rjsx-mode)
+  :general
+  (jl/major-modes
+    :keymaps '(js-mode rjsx-mode)
+    :states '(normal visual operator)
+    :major-modes t
+    "if" 'js-doc-insert-function-doc
+    "it" 'js-doc-insert-tag))
 #+end_src
 **** xref-js2
 #+begin_src elisp
