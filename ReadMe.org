@@ -99,6 +99,7 @@
   - [[#auto-sudoedit][auto-sudoedit]]
   - [[#sudo-edit][sudo-edit]]
   - [[#artist-mode][artist mode]]
+  - [[#pdf-tools][PDF tools]]
 - [[#shells][Shells]]
   - [[#term][Term]]
   - [[#vterm][Vterm]]
@@ -391,7 +392,7 @@ Taken from [[https://emacsredux.com/blog/2013/05/04/rename-file-and-buffer/][ema
     "fc" 'copy-file
     "fD" 'delete-file-and-buffer
     "fed" '(find-emacs-dotfile :which-key "Open init file")
-    "fec" '(find-emacs-config)
+    "fec" 'find-emacs-config
     "fnd" '(find-system-dotfile :which-key "Open dotfiles")
     "fR" 'rename-file-and-buffer
     "fs" 'save-buffer
@@ -1958,7 +1959,7 @@ Multiple major modes!
     (agda2-previous-goal)))
 #+end_src
 **** org-agda-mode
-#+begin_src elisp
+#+begin_src elisp :tangle no
 (use-package org-agda-mode
   :straight (:host github
 		   :repo "alhassy/org-agda-mode"
@@ -4943,7 +4944,7 @@ SCOPE can be:
   (setq esup-depth 0))
 #+end_src
 ** openwith
-#+begin_src elisp
+#+begin_src elisp :tangle no
 (use-package openwith
   :after (dired vertico)
   :config
@@ -4982,6 +4983,44 @@ Seamless editing of privileged files, by using Tramp. I prefer to choose to reop
    :states '(normal visual operator)
    :major-modes t
    ) )
+#+end_src
+** PDF tools
+As this needs some building/compiling, I tend to install it through Nix.
+#+begin_src elisp
+(use-package pdf-tools
+  :straight nil
+  :mode (("\\.pdf\\'" . pdf-view-mode))
+  :general
+ (jl/major-modes
+   :keymaps 'pdf-view-mode-map
+   :states '(normal visual operator)
+   :major-modes t
+   "a" '(:ignore t :which-key "annotations")
+   "t" '(:ignore t :which-key "toggle")
+
+   "aa" #'pdf-annot-attachment-dired
+   "ah" #'pdf-annot-add-highlight-markup-annotation
+   "al" #'pdf-annot-list-annotations
+   "am" #'pdf-annot-add-markup-annotation
+   "ao" #'pdf-annot-add-strikeout-markup-annotation
+   "as" #'pdf-annot-add-squiggly-markup-annotation
+   "at" #'pdf-annot-add-text-annotation
+   "au" #'pdf-annot-add-underline-markup-annotation
+   "aD" #'pdf-annot-delete
+
+   "td" #'pdf-view-dark-minor-mode
+   "tm" #'pdf-view-midnight-minor-mode
+   "tp" #'pdf-view-printer-minor-mode
+   "tt" #'pdf-view-themed-minor-mode
+
+   "p" #'pdf-view-extract-region-image
+   "P" #'pdf-misc-print-document
+
+   "TAB" #'pdf-outline
+   "s" #'pdf-occur)
+ :config
+ (setq pdf-view-use-scaling t)
+ (pdf-tools-install))
 #+end_src
 * Shells
 ** Term
